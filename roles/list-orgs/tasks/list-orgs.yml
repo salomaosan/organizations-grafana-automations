@@ -1,0 +1,30 @@
+- name: Listando Organizações
+  uri:
+    url: "{{ grf_server_host }}/api/orgs"
+    headers:
+      Content-Type: "application/json"
+    user: "{{ grf_username }}"
+    password: "{{ grf_password }}"
+    method: GET
+    force_basic_auth: yes
+    status_code:
+      - 200
+    body_format: json
+  register: response
+
+- name: Removendo lista de variaveis antigas das ORGs 
+  local_action:
+    module: lineinfile
+    dest: ./host_vars/organizations.yml
+    state: absent
+    regexp: "^  - {.*}$"
+    insertafter: "organizations:"
+
+- name: Adicionando nova lista de variaveis para as ORGs
+  local_action:
+    module: lineinfile
+    dest: ./host_vars/organizations.yml
+    insertafter: "organizations:"
+    line: "  - {{ item }}"
+  with_items: "{{ response.json | list }}"
+

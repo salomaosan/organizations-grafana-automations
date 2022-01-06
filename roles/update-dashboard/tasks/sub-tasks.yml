@@ -1,0 +1,46 @@
+- name: "Inicializando atualização na org - {{ outer_item.name }}\nExportando/Salvando dashbord antiga"
+  local_action:
+    module: grafana_dashboard
+    grafana_url: "{{ grf_server_host }}"
+    grafana_user: "{{ grf_username }}"
+    grafana_password: "{{ grf_password }}"
+    org_id: "{{ outer_item.id }}"
+    state: export
+    uid: "{{ jsondata }}"
+    validate_certs: false
+    path: "./host_vars/backup/{{ outer_item.name }}-ambiente geral.json"     
+  register: response
+
+- name: Importando Nova dash
+  local_action:
+    module: grafana_dashboard
+    grafana_url: "{{ grf_server_host }}"
+    grafana_user: "{{ grf_username }}"
+    grafana_password: "{{ grf_password }}"
+    org_id: "{{ outer_item.id }}"
+    commit_message: Updated by ansible
+    state: present
+    overwrite: yes
+    validate_certs: false
+    path: ./roles/update-dashboard/files/ambiente.json
+  when: response.changed|bool == true
+  register: status_import
+
+- name: Removendo arquivo local da dash não atualizada
+  local_action:
+    module: file
+    path: "./host_vars/backup/{{ outer_item.name }}-ambiente geral.json"
+    state: absent
+  when: response.changed|bool == true and status_import.changed|bool == false
+
+- name: Listando ORG que foi atualizada de variaveis para as ORGs
+  local_action:
+    module: lineinfile
+    dest: ./host_vars/backup/updated_organizations.yml
+    insertafter: "updated_organization:"
+    line: "  - {{ outer_item }}"
+  when: status_import.changed|bool == true
+
+#- name: "Finalizadno as tasks na org - {{ outer_item.name }}"
+#  debug:
+#    msg: "Atualization status: {{ status_import.changed }}"

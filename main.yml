@@ -1,0 +1,5 @@
+- hosts: local
+  roles:
+  - { role: list-orgs, tags: ["list-orgs-role"] }
+  - { role: create-datasource, tags: ["create-datasource-role"] } 
+  - { role: update-dashboard, tags: ["update-dashboard-role"] }

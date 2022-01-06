@@ -1,0 +1,7 @@
+# Esse arquivo deve ser renomeado para 'localhost' e atualizar as variáveia abaixo 
+# para que o ansible possa encontrar o seu grafana
+
+grf_server_host: "http://localhost:3000"
+grf_username: "admin"
+grf_password: "password"
+

@@ -1,0 +1,3 @@
+---
+# tasks file for update-dashboard
+- include: update-dashboard.yml

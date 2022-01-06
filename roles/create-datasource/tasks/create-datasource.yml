@@ -1,0 +1,28 @@
+- name: Incluindo a lista de organizações
+  include_vars:
+    file: ./host_vars/organizations.yml
+
+- name: Create MySQL datasource
+  local_action:
+    module: grafana_datasource
+    name: "MySQL"
+    grafana_url: "{{ grf_server_host }}"
+    grafana_user: "{{ grf_username }}"
+    grafana_password: "{{ grf_password }}"
+    org_id: "{{ item.id }}"
+    ds_type: "{{ datasource_type }}"
+    ds_url: "{{ datasource_url }}"
+    validate_certs: false
+    database: "{{ database_name }}"
+    user: "{{ database_user }}"
+    additional_secure_json_data:
+      password: "{{ database_pass }}"
+    additional_json_data:
+      connMaxLifetime: 300
+  loop: "{{ organizations }}"
+  register: response
+
+- name:
+  debug:
+    msg: "ORGID= {{ item }}" 
+  with_items: "{{ response.results | map(attribute='datasource.id') | list }}"
