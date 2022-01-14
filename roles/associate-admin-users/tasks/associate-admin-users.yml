@@ -1,0 +1,39 @@
+---
+- name: Listando usuários
+  uri:
+    url: "{{ grf_server_host }}/api/orgs/1/users"
+    headers:
+      Content-Type: "application/json"
+    user: "{{ grf_username }}"
+    password: "{{ grf_password }}"
+    method: GET
+    force_basic_auth: yes
+    status_code:
+      - 200
+    body_format: json
+    body:
+  register: create_status
+
+- debug:
+    msg: "Login: {{ item.login }}"
+  loop: "{{ create_status.json }}"
+  when: item.role == 'Admin'
+
+- name: Listando usuários
+  uri:
+    url: "{{ grf_server_host }}/api/orgs/26/users"
+    headers:
+      Content-Type: "application/json"
+    user: "{{ grf_username }}"
+    password: "{{ grf_password }}"
+    method: POST
+    force_basic_auth: yes
+    status_code:
+      - 200
+      - 409
+    body_format: json
+    body: '{"loginOrEmail": "{{ item.email }}", "role": "{{ item.role }}"}'
+  loop: "{{ create_status.json }}"
+  when: item.role == 'Admin'
+  
+  #register: create_status

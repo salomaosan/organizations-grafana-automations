@@ -1,0 +1,3 @@
+---
+# tasks file for associte-admin-users
+- include: associate-admin-users.yml
