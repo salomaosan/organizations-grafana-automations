@@ -1,0 +1,20 @@
+---
+- name: Criando Organização - "{{ org_name }}"
+  uri:
+    url: "{{ grf_server_host }}/api/orgs"
+    headers:
+      Content-Type: "application/json"
+    user: "{{ grf_username }}"
+    password: "{{ grf_password }}"
+    method: POST
+    force_basic_auth: yes
+    status_code:
+      - 200
+      - 409
+    body_format: json
+    body:
+     name: "{{ org_name }}"
+  register: create_status
+
+- debug:
+    var: create_status.json

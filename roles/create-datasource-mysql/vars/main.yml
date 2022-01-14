@@ -1,0 +1,15 @@
+---
+# vars file for create-datasource
+# Ambiente de teste
+datasource_type: "mysql"
+datasource_url: "127.0.0.1:3306"
+database_name: "zabbix"
+database_user: "zabbix"
+database_pass: "zabbixhomol"
+
+# Ambiente de produção
+#datasource_type: "mysql"
+#datasource_url: "zabbixnanuvem-xcnj-zabbix.cpjbmhbnnocm.us-east-2.rds.amazonaws.com:3306"
+#database_name: "zabbix"
+#database_user: "grafana_read"
+#database_pass: "QqjM^QyaMwL5$8oGK&Ox"

@@ -1,5 +1,10 @@
 - hosts: local
   roles:
-  - { role: list-orgs, tags: ["list-orgs-role"] }
-  - { role: create-datasource, tags: ["create-datasource-role"] } 
-  - { role: update-dashboard, tags: ["update-dashboard-role"] }
+  #- { role: list-orgs, tags: ["list-orgs-role"] }
+  - { role: create-org, tags: ["create-org-role"] }
+  - { role: create-datasource-zabbix, tags: ["create-datasource-zabbix-role"] }
+  - { role: create-datasource-mysql, tags: ["create-datasource-mysql-role"] } 
+
+
+
+#--extra-vars "org_name=common"

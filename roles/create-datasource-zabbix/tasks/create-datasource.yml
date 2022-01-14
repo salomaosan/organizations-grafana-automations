@@ -1,0 +1,34 @@
+- name: Verificando a exitencia da Org. "{{ org_name }}""
+  uri:
+    url: "{{ grf_server_host }}/api/orgs/name/{{ org_name | urlencode}}"
+    headers:
+      Content-Type: "application/json"
+    user: "{{ grf_username }}"
+    password: "{{ grf_password }}"
+    method: GET
+    force_basic_auth: yes
+    status_code: 200
+    body_format: json
+  register: result
+
+- name: Create Zabbix datasource
+  local_action:
+    module: grafana_datasource
+    name: "Zabbix"
+    grafana_url: "{{ grf_server_host }}"
+    grafana_user: "{{ grf_username }}"
+    grafana_password: "{{ grf_password }}"
+    org_id: "{{ result.json.id }}"
+    ds_type: "{{ datasource_type }}"
+    ds_url: "{{ datasource_url }}"
+    validate_certs: false
+    zabbix_user : "{{ zabbix_user }}"
+    zabbix_password: "{{ zabbix_pass }}" 
+    is_default: true   
+  when: result.status == 200
+  register: response
+
+- debug:
+    var: response.msg
+
+

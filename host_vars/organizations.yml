@@ -1,1 +1,9 @@
 organizations:
+  #- {'id': 5, 'name': 'q01076-mv03321-Siaze Humanity'}
+  - {'id': 32, 'name': 'q01018-mv02289-Saude Sim Ltda'}
+  #- {'id': 24, 'name': 'q01011-mv02220-Fundacao do ABC'}
+  #- {'id': 1, 'name': 'Main Org.'}
+  #- {'id': 27, 'name': '10058-gn-AME Itapevi'}
+  #- {'id': 26, 'name': '01147-gn-Master Load Rio Comercio e Industria LTDA - FIMATEC'}
+  #- {'id': 29, 'name': '01147-gn-Master Load'}
+  #- {'id': 25, 'name': '00507-gn-Unimed Chapeco'}

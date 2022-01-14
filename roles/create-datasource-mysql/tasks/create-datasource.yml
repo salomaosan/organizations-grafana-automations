@@ -1,6 +1,15 @@
-- name: Incluindo a lista de organizações
-  include_vars:
-    file: ./host_vars/organizations.yml
+- name: Verificando a exitencia da Org. "{{ org_name }}""
+  uri:
+    url: "{{ grf_server_host }}/api/orgs/name/{{ org_name | urlencode}}"
+    headers:
+      Content-Type: "application/json"
+    user: "{{ grf_username }}"
+    password: "{{ grf_password }}"
+    method: GET
+    force_basic_auth: yes
+    status_code: 200
+    body_format: json
+  register: result
 
 - name: Create MySQL datasource
   local_action:
@@ -9,7 +18,7 @@
     grafana_url: "{{ grf_server_host }}"
     grafana_user: "{{ grf_username }}"
     grafana_password: "{{ grf_password }}"
-    org_id: "{{ item.id }}"
+    org_id: "{{ result.json.id }}"
     ds_type: "{{ datasource_type }}"
     ds_url: "{{ datasource_url }}"
     validate_certs: false
@@ -19,10 +28,7 @@
       password: "{{ database_pass }}"
     additional_json_data:
       connMaxLifetime: 300
-  loop: "{{ organizations }}"
   register: response
 
-- name:
-  debug:
-    msg: "ORGID= {{ item }}" 
-  with_items: "{{ response.results | map(attribute='datasource.id') | list }}"
+- debug:
+    var: response.msg
