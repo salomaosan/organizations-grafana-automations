@@ -1,7 +1,19 @@
----
-- name: Listando usuários
+- name: Verificando a exitencia da Org. "{{ org_name }}"
   uri:
-    url: "{{ grf_server_host }}/api/orgs/1/users"
+    url: "{{ grf_server_host }}/api/orgs/name/{{ org_name | urlencode}}"
+    headers:
+      Content-Type: "application/json"
+    user: "{{ grf_username }}"
+    password: "{{ grf_password }}"
+    method: GET
+    force_basic_auth: yes
+    status_code: 200
+    body_format: json
+  register: result
+
+- name: Listando Usuários da Flowti
+  uri:
+    url: "{{ grf_server_host }}/api/orgs/40/users"
     headers:
       Content-Type: "application/json"
     user: "{{ grf_username }}"
@@ -11,17 +23,17 @@
     status_code:
       - 200
     body_format: json
-    body:
-  register: create_status
+  register: response
 
-- debug:
-    msg: "Login: {{ item.login }}"
-  loop: "{{ create_status.json }}"
-  when: item.role == 'Admin'
+- name: host
+  debug:
+    var: item.login
+  loop: "{{ response.json }}"  
+  when: item.login|lower  is search("flowti.com.br")
 
-- name: Listando usuários
+- name: Trazendo usuários Flowti para a Org. "{{ org_name }}"
   uri:
-    url: "{{ grf_server_host }}/api/orgs/26/users"
+    url: "{{ grf_server_host }}/api/orgs/{{ result.json.id }}/users"
     headers:
       Content-Type: "application/json"
     user: "{{ grf_username }}"
@@ -32,8 +44,7 @@
       - 200
       - 409
     body_format: json
-    body: '{"loginOrEmail": "{{ item.email }}", "role": "{{ item.role }}"}'
-  loop: "{{ create_status.json }}"
-  when: item.role == 'Admin'
-  
-  #register: create_status
+    body: '{"loginOrEmail": "{{ item.login }}", "role": "{{ item.role }}"}'
+  loop: "{{ response.json }}"
+  when: item.login|lower  is search("flowti.com.br")
+
