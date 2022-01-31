@@ -18,22 +18,16 @@ pipeline {
                 sh ('ansible-playbook -i hosts main.yml --tags "create-org-role" --vault-password-file .vault_key --extra-vars "org_name=\'${ORGANIZATION}\'"')
             }
         }
-    }
-    stages {
         stage('Create Datasource Zabbix') {
             steps{
                 sh ('ansible-playbook -i hosts main.yml --tags "create-datasource-zabbix-role" --vault-password-file .vault_key --extra-vars "org_name=\'${ORGANIZATION}\'"')
             }
         }
-    }
-    stages {
         stage('Create Datasource MySQL') {
             steps{
                 sh ('ansible-playbook -i hosts main.yml --tags "create-datasource-mysql-role" --vault-password-file .vault_key --extra-vars "org_name=\'${ORGANIZATION}\'"')
             }
         }
-    }
-    stages {
         stage('Associando usuários Flowti') {
             steps{
                 sh ('ansible-playbook -i hosts main.yml --tags "associate-admin-users-role" --vault-password-file .vault_key --extra-vars "org_name=\'${ORGANIZATION}\'"')
