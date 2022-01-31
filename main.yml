@@ -9,6 +9,3 @@
 
 
 #--extra-vars "org_name=common"
-
-# export ANSIBLE_VAULT_PASSWORD=Password
-# echo $ANSIBLE_VAULT_PASSWORD >> .vault_pass
