@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker { 
-            image 'docker pull salomaosan/ansible-alpine' 
+            image 'salomaosan/ansible-alpine' 
             args '-u root:root'
         }
     }
@@ -15,7 +15,7 @@ pipeline {
         stage('Build') {
             steps{
                 sh ('echo $VAUL_KEY > .vault_key')
-                sh ('ansible-playbook -i host -i main.yml --tags "list-orgs-role" --vault-password-file .vault_key --extra-vars "org_name=${env.ORGANIZATION}" --list-tasks')
+                sh ('ansible-playbook -i host -i main.yml --tags "list-orgs-role" --vault-password-file .vault_key --extra-vars "org_name=${ORGANIZATION}" --list-tasks')
             }
         }
     }
