@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Associate User Flowti') {
             steps{
-                sh ('ansible-playbook -i hosts main.yml --tags "associate-admin-users-role" --vault-password-file .vault_key --extra-vars "org_name=\'${ORGANIZATION}\'"')
+                sh ('ansible-playbook -i hosts main.yml --tags "associate-flowti-user-role" --vault-password-file .vault_key --extra-vars "org_name=\'${ORGANIZATION}\'"')
             }
         }
     }
