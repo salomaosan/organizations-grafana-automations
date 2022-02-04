@@ -25,12 +25,6 @@
     body_format: json
   register: response
 
-- name: host
-  debug:
-    var: item.login
-  loop: "{{ response.json }}"  
-  when: item.login|lower  is search("flowti.com.br")
-
 - name: Trazendo usuários Flowti para a Org. "{{ org_name }}"
   uri:
     url: "{{ grf_server_host }}/api/orgs/{{ result.json.id }}/users"

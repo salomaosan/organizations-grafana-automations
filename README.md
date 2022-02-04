@@ -6,7 +6,7 @@ A finalidade dessa automação é auxiliar quem administra varias organizações
 - **create-org** - cria uma nova organização, o nome deve ser passado.
 - **create-datasource-zabbix** - cria uma novo datasource para o Zabbix na organização informada.
 - **create-datasource-mysql-role** - cria uma novo datasource para o Mysql na organização informada.
-- **associate-admin-users** - associa usuários de uma determinada organização raiz a essa organização.
+- **associate-flowti-user** - associa usuários de uma determinada organização raiz a essa organização.
 
 
 ## Dica de uso
