@@ -13,7 +13,7 @@
 
 - name: Listando Usuários da Flowti
   uri:
-    url: "{{ grf_server_host }}/api/orgs/40/users"
+    url: "{{ grf_server_host }}/api/orgs/63/users"
     headers:
       Content-Type: "application/json"
     user: "{{ grf_username }}"
