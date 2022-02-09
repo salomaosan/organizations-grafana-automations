@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Create Datasource Zabbix') {
             steps{
-                sh ('ansible-playbook -i hosts main.yml --tags "create-datasource-zabbix-role" --vault-password-file .vault_key --extra-vars "org_name=\'${ORGANIZATION}\'"--extra-vars=$GRAFANA_USR --extra-vars="grf_password=$GRAFANA_PSW"')
+                sh ('ansible-playbook -i hosts main.yml --tags "create-datasource-zabbix-role" --vault-password-file .vault_key --extra-vars "org_name=\'${ORGANIZATION}\'" --extra-vars=$GRAFANA_USR --extra-vars="grf_password=$GRAFANA_PSW"')
             }
         }
         stage('Create Datasource MySQL') {
