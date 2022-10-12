@@ -2,7 +2,7 @@
 
 A finalidade dessa automação é auxiliar quem administra varias organizações na criação de novas manter os usuários com permissão.
 
-### Há 3 roles com tags no arquivo main.yml 
+### Há 3 roles com tags no arquivo main.yml.
 - **create-org** - cria uma nova organização, o nome deve ser passado.
 - **create-datasource-zabbix** - cria uma novo datasource para o Zabbix na organização informada.
 - **create-datasource-mysql-role** - cria uma novo datasource para o Mysql na organização informada.
